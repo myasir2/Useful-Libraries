@@ -3,8 +3,9 @@ package main;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Stack;
 
-public class BreadthFirstSearchGraph {
+public class GraphTraversal {
 
     private static final HashMap<Integer, Node> idToNodeMap = new HashMap<>();
 
@@ -14,13 +15,14 @@ public class BreadthFirstSearchGraph {
         Node child2 = new Node(2);
         Node child3 = new Node(3);
 
-        root.adjacentNodes.add(child1);
         root.adjacentNodes.add(child2);
+        root.adjacentNodes.add(child3);
 
+        child1.adjacentNodes.add(root);
         child1.adjacentNodes.add(child2);
+        child1.adjacentNodes.add(new Node(4));
 
-        child2.adjacentNodes.add(root);
-        child2.adjacentNodes.add(child3);
+        child2.adjacentNodes.add(child1);
 
         child3.adjacentNodes.add(child3);
         child3.adjacentNodes.add(new Node(6));
@@ -32,7 +34,7 @@ public class BreadthFirstSearchGraph {
         idToNodeMap.put(2, child2);
         idToNodeMap.put(3, child3);
 
-        breadthFirstSearch(root);
+        depthFirstSearch(root);
     }
 
     private static void breadthFirstSearch(Node source) {
@@ -51,6 +53,27 @@ public class BreadthFirstSearchGraph {
                 if (!visited.contains(adjacentNode.id)) {
                     visited.add(adjacentNode.id);
                     queue.add(adjacentNode);
+                }
+            }
+        }
+    }
+
+    private static void depthFirstSearch(Node source) {
+        HashSet<Integer> visited = new HashSet<>();
+        Stack<Node> stack = new Stack<>();
+        stack.add(source);
+
+        while(!stack.isEmpty()) {
+            Node currentNode = stack.pop();
+
+            if(!visited.contains(currentNode.id)) {
+                System.out.print(currentNode.id + " ");
+                visited.add(currentNode.id);
+            }
+
+            for(Node adjacentNode : currentNode.adjacentNodes) {
+                if (!visited.contains(adjacentNode.id)) {
+                    stack.push(adjacentNode);
                 }
             }
         }
