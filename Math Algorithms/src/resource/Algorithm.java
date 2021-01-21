@@ -2,7 +2,7 @@ package resource;
 
 public class Algorithm 
 {
-	public static int binarySearchIterative(int array[], int number)
+	public static int binarySearchIterative(int[] array, int number)
 	{
 		int left = 0;
 		int right = array.length -1;
@@ -22,7 +22,7 @@ public class Algorithm
 		return -1;
 	}
 	
-	public static int binarySearchRecursive(int array[], int number, int left, int right)
+	public static int binarySearchRecursive(int[] array, int number, int left, int right)
 	{
 		if(left > right)
 			return -1;
@@ -36,19 +36,22 @@ public class Algorithm
 		else
 			return binarySearchRecursive(array, number, left, mid - 1);
 	}
-	
-	public static boolean isPalindromeIterative(String string)
+
+	public static boolean isPalindromeIterative(String str)
 	{
-		int reverseCounter = string.length() - 1;
-		
-		for(int i = 0; i < string.length() / 2; i++)
+		int low = 0;
+		int high = str.length() - 1;
+
+		while(low < high)
 		{
-			if(string.charAt(i) != string.charAt(reverseCounter))
+			if(str.charAt(low) != str.charAt(high)) {
 				return false;
-			
-			reverseCounter--;
+			}
+
+			low++;
+			high--;
 		}
-		
+
 		return true;
 	}
 	
